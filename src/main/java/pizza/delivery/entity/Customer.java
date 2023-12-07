@@ -32,9 +32,9 @@ public class Customer {
     @Column
     private Boolean isAuthorized = Boolean.FALSE; // буде перевірятись при покупці
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "id")
     private List<Check> checkList;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "id")
     private List<Order> basket;// щамовлення, які ще не підтверджені, та які не пішли в чек
 }

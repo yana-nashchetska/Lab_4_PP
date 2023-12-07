@@ -15,8 +15,9 @@ import java.math.BigDecimal;
 //FIXME: fix problem with DB. Чому не створюється таблиця?
 //FIXME: чому не можна створити піцу без ідентифікатора?
 public class Pizza {
-    @Id // що це за поле внизу я пишу???
+    @Id // що це за поле внизу я пишу??? //Влад: сам не знаю
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column
     private String pizzaName;
     @Column
@@ -25,5 +26,6 @@ public class Pizza {
     private String pizzaSauce;
     @Column
     private BigDecimal price;
+
 
 }

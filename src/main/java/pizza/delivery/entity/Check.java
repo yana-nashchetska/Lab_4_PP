@@ -24,6 +24,6 @@ public class Check {
     @Column
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "check")
+    @OneToMany(mappedBy = "id")
     private List<Order> orders;
 }
