@@ -36,5 +36,5 @@ public class Customer {
     private List<Check> checkList;
 
     @OneToMany(mappedBy = "id")
-    private List<Order> basket;// щамовлення, які ще не підтверджені, та які не пішли в чек
+    private List<PizzaOrder> basket;// щамовлення, які ще не підтверджені, та які не пішли в чек
 }

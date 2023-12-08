@@ -1,15 +1,15 @@
 package pizza.delivery.repository;
 
 import org.springframework.stereotype.Repository;
-import pizza.delivery.entity.Pizza;
+import pizza.delivery.entity.PizzaOrder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//I'm not sure if it will be in the final code, but for the testing it should be fine
+//Тестовий код, треба замінити на фінальну версію ASAP
 @Repository
-public class PizzaRepository {
-    public List<Pizza> pizzaList = new ArrayList<>();
+public class PizzaOrderRepository {
+    public List<PizzaOrder> pizzaList = new ArrayList<>();
 
     private Long lastPizzaId = 0L;
 
@@ -18,12 +18,12 @@ public class PizzaRepository {
         return lastPizzaId;
     }
 
-    public void save(Pizza pizza) {
+    public void save(PizzaOrder pizza) {
         pizza.setId(generateId());
         pizzaList.add(pizza);
     }
 
-    public Pizza findById(final Long id) {
+    public PizzaOrder findById(final Long id) {
         return pizzaList.stream().filter(x->x.getId().equals(id)).findFirst().orElse(null);
     }
 }

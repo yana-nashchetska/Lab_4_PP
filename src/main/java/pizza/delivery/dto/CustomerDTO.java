@@ -27,11 +27,11 @@ public class CustomerDTO {
     // чи мані буде нулем, а будемо задавати?
 
     private Boolean isAuthorized = Boolean.FALSE; // буде перевірятись при покупці
-    private List<OrderDTO> basket;// замовлення, які ще не підтверджені
+    private List<PizzaOrderDTO> basket;// замовлення, які ще не підтверджені
 
 
     // Чи потрібно нам як параметри передавати також OrderDTO?
-    public static CustomerDTO toDTO(final Customer customer, final OrderDTO orderDTO) {
+    public static CustomerDTO toDTO(final Customer customer, final PizzaOrderDTO pizzaOrderDTO) {
         final CustomerDTO customerDTO = new CustomerDTO();
 
         customerDTO.setFirstName(customer.getFirstName());
