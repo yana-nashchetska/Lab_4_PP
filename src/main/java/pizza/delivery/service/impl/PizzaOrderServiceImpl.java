@@ -3,7 +3,7 @@ package pizza.delivery.service.impl;
 import jakarta.persistence.OneToMany;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pizza.delivery.dto.CustomerDTO;
+import pizza.delivery.entity.Customer;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.PizzaOrder;
 import pizza.delivery.exceptions.BadRequestException;
@@ -13,13 +13,12 @@ import pizza.delivery.service.PizzaOrderService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//Пробую мімікувати код Крупи // топчик
 @Service
 @RequiredArgsConstructor
 public class PizzaOrderServiceImpl implements PizzaOrderService {
     private final PizzaOrderRepository pizzaOrderRepository;
-    // private final CustomerServiceImpl customerRepository;
-// РОЗКОМЕНТУВАТИ КОД ВИЩЕ, КОЛИ БУДЕ ДОДАНО АНОТАЦІЮ СЕРВІСУ В КАСТОМЕРА
+    private final CustomerServiceImpl customerRepository;
+
     @Override
     public List<PizzaOrderDTO> findAll() {
         return pizzaOrderRepository.findAll().stream()
@@ -30,8 +29,17 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
     @Override
     public void orderPizza(Long customerId, Long pizzaOrderId) {
-   // Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
-//РОЗКОМЕНТУВАТИ ПІЗНІШЕ
+
+        // FIXME: додати перевірку на наявність користувача та ордера
+        //FixMe: створити метод в репозиторії, який буде шукати користувача по ід
+
+        // РОЗКОМЕНТУВАТИ, КОЛИ ДО КАСТОМЕРА БУДЕ ДОДАНО FIND BY ID!!!!!!!!!
+
+ /*   Customer customer = customerRepository.findById(customerId)
+            .orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
+    PizzaOrder pizzaOrder = pizzaOrderRepository.findById(pizzaOrderId)
+            .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", pizzaOrderId)));
+    customer.getBasket().add(pizzaOrder); // додаємо ордер в корзину*/
     }
 
     @Override
@@ -74,15 +82,4 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
         pizzaOrder.setConfirmed(Boolean.TRUE);
         pizzaOrderRepository.save(pizzaOrder);
     }
-
-//    @Override
-//    public void createOrder(Long id) {
-//
-//
-//    }
-//
-//    @Override
-//    public void saveOrder(Long customerDTOId, Long pizzaOrderDTOId){
-//
-//   }
 }
