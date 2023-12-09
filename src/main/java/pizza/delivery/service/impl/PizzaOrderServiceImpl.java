@@ -6,8 +6,14 @@ import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.PizzaOrder;
+import pizza.delivery.exceptions.BadRequestException;
+import pizza.delivery.repository.PizzaOrderRepository;
 import pizza.delivery.service.PizzaOrderService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+//Пробую мімікувати код Крупи // топчик
 @Service
 @RequiredArgsConstructor
 public class PizzaOrderServiceImpl implements PizzaOrderService {

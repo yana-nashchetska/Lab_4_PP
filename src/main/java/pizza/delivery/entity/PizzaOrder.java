@@ -3,10 +3,12 @@ package pizza.delivery.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Клас для представлення замовлення піци
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "pizzaOrders")
 public class PizzaOrder {
