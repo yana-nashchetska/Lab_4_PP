@@ -27,7 +27,7 @@ public class PizzaOrder {
     // а то не мало б бути в сервісі? я хз просто чи тут мають бути методи
     // Метод для вибору типу піци //Нефінальна версія імплементації
     public PizzaOrder choosePizza(PizzaType pizzaType, SauceType sauceType, boolean withCheeseCrust) {
-        PizzaOrder pizzaOrder = new PizzaOrder(0L, pizzaType, sauceType, withCheeseCrust);
+        PizzaOrder pizzaOrder = new PizzaOrder(0L, pizzaType, sauceType, withCheeseCrust, this.isConfirmed); // бо коли тільки додаємо до корзинки, то ще не підтверджено
         System.out.println("You chose " + pizzaType.getDisplayName() + " pizza with " +
                 sauceType.getDisplayName() + " sauce and " +
                 (withCheeseCrust ? "cheese crust." : "regular crust."));

@@ -1,7 +1,6 @@
 package pizza.delivery.resource;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.entity.PizzaOrder;
