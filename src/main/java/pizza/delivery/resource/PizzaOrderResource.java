@@ -1,24 +1,20 @@
 package pizza.delivery.resource;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pizza.delivery.entity.PizzaOrder;
-import pizza.delivery.repository.PizzaOrderRepository;
+import pizza.delivery.service.PizzaOrderService;
 
 @RestController
 @RequestMapping("/pizza")
+@RequiredArgsConstructor
 public class PizzaOrderResource {
-    @Autowired
-    private PizzaOrderRepository pizzaRepository;
 
-    @GetMapping("/{id}")
-    public PizzaOrder getPizza(final @PathVariable Long id){
-        return pizzaRepository.findById(id);
-    }
+    private final PizzaOrderService pizzaOrderService;
 
-    @PostMapping("/")
-    public String addPizza(final @RequestBody PizzaOrder pizza) {
-        pizzaRepository.save(pizza);
-        return "It works!";
+    @PostMapping("/order")
+    public void save(@RequestBody PizzaOrder pizzaOrder){
+        pizzaOrderService.saveOrder(pizzaOrder);
     }
 }
