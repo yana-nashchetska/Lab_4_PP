@@ -20,6 +20,9 @@ public class PizzaOrder {
 
     private boolean withCheeseCrust;
 
+    private boolean isConfirmed = false; // і чи так буде норм?
+
+    // а то не мало б бути в сервісі? я хз просто чи тут мають бути методи
     // Метод для вибору типу піци //Нефінальна версія імплементації
     public PizzaOrder choosePizza(PizzaType pizzaType, SauceType sauceType, boolean withCheeseCrust) {
         PizzaOrder pizzaOrder = new PizzaOrder(0L, pizzaType, sauceType, withCheeseCrust);
