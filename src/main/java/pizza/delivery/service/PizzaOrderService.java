@@ -18,7 +18,9 @@ public interface PizzaOrderService {
 
     PizzaOrderDTO save(final PizzaOrderDTO pizzaOrderDTO);
 
-    void deleteById(Long id);
+    void deleteFromBasket(Long orderId);
+
+    void deleteAllFromBasket(Long customerId);
 
     void orderPizza(Long userId, Long pizzaOrderId);
 }

@@ -78,11 +78,28 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
     //FIXME: переписати цей метод дя того, щоб можна було реалізовувати різну логіку видаляння
 
-    @Override
+    /*@Override
     public void deleteById(Long id) {
         PizzaOrder pizzaOrder = findById(id);
 
         pizzaOrder.setConfirmed(Boolean.TRUE);
         pizzaOrderRepository.save(pizzaOrder);
+    }*/
+
+
+    @Override
+    public void deleteFromBasket(Long orderId) {
+        pizzaOrderRepository.deleteById(orderId);
+    }
+
+
+    // РОЗКОМЕНТУВАТИ ПІЗНІШЕ
+@Override
+    public void deleteAllFromBasket(Long customerId) {
+     Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
+        customer.getBasket().clear();
+        customerRepository.save(customer);
     }
 }
+
