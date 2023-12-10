@@ -6,8 +6,8 @@ import pizza.delivery.entity.Check;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
-
+import org.springframework.stereotype.Repository;
+@Repository
 public interface CheckRepository extends JpaRepository<Check, Long> {
     List<Check> findAllByOrders_PizzaName(String pizzaName);
     List<Check> findAllByTotalPriceGreaterThan(BigDecimal amount);

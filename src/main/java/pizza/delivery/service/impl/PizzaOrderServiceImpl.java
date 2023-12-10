@@ -3,9 +3,10 @@ package pizza.delivery.service.impl;
 import jakarta.persistence.OneToMany;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pizza.delivery.dto.CustomerDTO;
+import pizza.delivery.entity.Customer;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.PizzaOrder;
+import pizza.delivery.entity.SauceType;
 import pizza.delivery.exceptions.BadRequestException;
 import pizza.delivery.repository.PizzaOrderRepository;
 import pizza.delivery.service.PizzaOrderService;
@@ -13,13 +14,12 @@ import pizza.delivery.service.PizzaOrderService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//Пробую мімікувати код Крупи // топчик
 @Service
 @RequiredArgsConstructor
 public class PizzaOrderServiceImpl implements PizzaOrderService {
     private final PizzaOrderRepository pizzaOrderRepository;
-    // private final CustomerServiceImpl customerRepository;
-// РОЗКОМЕНТУВАТИ КОД ВИЩЕ, КОЛИ БУДЕ ДОДАНО АНОТАЦІЮ СЕРВІСУ В КАСТОМЕРА
+    private final CustomerServiceImpl customerRepository;
+
     @Override
     public List<PizzaOrderDTO> findAll() {
         return pizzaOrderRepository.findAll().stream()
@@ -30,8 +30,25 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
     @Override
     public void orderPizza(Long customerId, Long pizzaOrderId) {
-   // Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
-//РОЗКОМЕНТУВАТИ ПІЗНІШЕ
+
+        // FIXME: додати перевірку на наявність користувача та ордера - Є
+        //FixMe: створити метод в репозиторії, який буде шукати користувача по ід
+
+        // РОЗКОМЕНТУВАТИ, КОЛИ ДО КАСТОМЕРА БУДЕ ДОДАНО FIND BY ID!!!!!!!!!
+
+ /*   Customer customer = customerRepository.findById(customerId)
+            .orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
+    PizzaOrder pizzaOrder = pizzaOrderRepository.findById(pizzaOrderId)
+            .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", pizzaOrderId)));
+    customer.getBasket().add(pizzaOrder); // додаємо ордер в корзину*/
+    }
+
+    @Override
+    public void addSauce(Long orderId, SauceType sauceType) {
+        PizzaOrder pizzaOrder = pizzaOrderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", orderId)));
+        pizzaOrder.setSauceType(sauceType);
+        pizzaOrderRepository.save(pizzaOrder);
     }
 
     @Override
@@ -44,14 +61,6 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     private PizzaOrder findById(Long id) {
         return pizzaOrderRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", id)));
     }
-
-    // мені здається, цей метод має зробити Настя, щоб перебирати ордери з полем true та додавати в чек
-
- /*   @Override
-    // Зовсім не розумію чи це працює і як якщо воно працює
-    public List<PizzaOrderDTO> findAll() {
-        return pizzaOrderRepository.findAllByIsConfirmedFalse().stream().map(PizzaOrderDTO::toDTO).collect(Collectors.toList());
-    }*/
 
     @Override
     public PizzaOrderDTO save(final PizzaOrderDTO pizzaOrderDTO) {
@@ -67,22 +76,30 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
         return PizzaOrderDTO.toDTO(pizzaOrder);
     }
 
-    @Override
+    //FIXME: переписати цей метод дя того, щоб можна було реалізовувати різну логіку видаляння
+
+    /*@Override
     public void deleteById(Long id) {
         PizzaOrder pizzaOrder = findById(id);
 
         pizzaOrder.setConfirmed(Boolean.TRUE);
         pizzaOrderRepository.save(pizzaOrder);
+    }*/
+
+
+    @Override
+    public void deleteFromBasket(Long orderId) {
+        pizzaOrderRepository.deleteById(orderId);
     }
 
-//    @Override
-//    public void createOrder(Long id) {
-//
-//
-//    }
-//
-//    @Override
-//    public void saveOrder(Long customerDTOId, Long pizzaOrderDTOId){
-//
-//   }
+
+    // РОЗКОМЕНТУВАТИ ПІЗНІШЕ
+@Override
+    public void deleteAllFromBasket(Long customerId) {
+     Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new BadRequestException(String.format("Customer with id {%s} not found", customerId)));
+        customer.getBasket().clear();
+        customerRepository.save(customer);
+    }
 }
+
