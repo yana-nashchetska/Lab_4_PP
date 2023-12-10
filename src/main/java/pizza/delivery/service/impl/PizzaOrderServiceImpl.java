@@ -1,5 +1,7 @@
 package pizza.delivery.service.impl;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CustomerDTO;
@@ -14,10 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PizzaOrderServiceImpl implements PizzaOrderService {
-    private final PizzaOrderRepository pizzaOrderRepository;
-    private final CustomerServiceImpl customerRepository;
+    private PizzaOrderRepository pizzaOrderRepository;
+    private CustomerServiceImpl customerRepository;
 
     @Override
     public List<PizzaOrderDTO> findAll() {

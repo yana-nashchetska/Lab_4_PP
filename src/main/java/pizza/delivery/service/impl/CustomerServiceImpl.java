@@ -1,6 +1,8 @@
 package pizza.delivery.service.impl;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import pizza.delivery.service.CustomerService;
 import pizza.delivery.entity.Customer;
 import pizza.delivery.repository.CustomerRepository;
@@ -15,9 +17,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
-    private final CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Override
     public CustomerDTO findDTOById(final Long id) {
@@ -74,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO searchByNameAndSurname(String firstName, String lastName) {
-        return customerRepository.findOneByNameAndSurname(firstName, lastName)
+        return customerRepository.findOneByFirstNameAndLastName(firstName, lastName)
                 .map(CustomerDTO::toDTO)
                 .orElseThrow(() -> new BadRequestException(String.format("User with name {%s} and surname {%s} not found",
                         firstName, lastName)));
