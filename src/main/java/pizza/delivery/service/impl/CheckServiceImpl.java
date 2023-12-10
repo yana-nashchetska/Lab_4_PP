@@ -3,7 +3,6 @@ package pizza.delivery.service.impl;
 import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CheckDTO;
 import pizza.delivery.entity.Check;
-import pizza.delivery.entity.Order;
 import pizza.delivery.entity.PizzaOrder;
 import pizza.delivery.exceptions.BadRequestException;
 import pizza.delivery.repository.CheckRepository;
@@ -18,6 +17,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CheckServiceImpl implements CheckService {
+
+    @Override
+    public CheckDTO getCheckById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<CheckDTO> getAllChecks() {
+        return null;
+    }
 
     private final CheckRepository checkRepository;
 
@@ -43,19 +52,35 @@ public class CheckServiceImpl implements CheckService {
     public CheckDTO createCheck(CheckDTO checkDTO) {
         Check check = new Check();
         check.setDate(checkDTO.getDate());
-        // Assuming that orders in CheckDTO are already populated correctly
+
         check.setOrders(checkDTO.getOrders());
 
-        // Calculate total price based on the sum of product prices
         BigDecimal totalSum = calculateTotalSum(check.getOrders());
-        check.setTotalPrice(totalSum);
+        check.setTotalSum(totalSum);
 
         checkRepository.save(check);
         return CheckDTO.toDTO(check);
     }
 
     private BigDecimal calculateTotalSum(List<PizzaOrder> orders) {
-        return null;
+
+        BigDecimal totalSum = BigDecimal.ZERO;
+        for (PizzaOrder order : orders) {
+            if (order.getPrice() == null) {
+                throw new BadRequestException("Price can't be null");
+            }
+            else if (order.getPrice().compareTo(BigDecimal.ZERO) < 0) {
+                throw new BadRequestException("Price can't be negative");
+            }
+
+            else if (order.getPrice().compareTo(BigDecimal.ZERO) == 0) {
+                throw new BadRequestException("Price can't be zero");
+            }
+
+            totalSum = totalSum.add(order.getPrice());
+        }
+
+        return totalSum;
     }
 
     @Override
@@ -69,9 +94,8 @@ public class CheckServiceImpl implements CheckService {
         savedCheck.setDate(checkDTO.getDate());
         savedCheck.setOrders(checkDTO.getOrders());
 
-        // Calculate total price based on the sum of product prices
         BigDecimal totalSum = calculateTotalSum(savedCheck.getOrders());
-        savedCheck.setTotalPrice(totalSum);
+        savedCheck.setTotalSum(totalSum);
 
         checkRepository.save(savedCheck);
         return CheckDTO.toDTO(savedCheck);
@@ -83,7 +107,7 @@ public class CheckServiceImpl implements CheckService {
 
         // Assuming Order class has a getPrice() method returning BigDecimal
         List<BigDecimal> orderPrices = check.getOrders().stream()
-                .map(Order::getPrice)
+                .map(PizzaOrder::getPrice)
                 .collect(Collectors.toList());
 
         // Summing up the prices

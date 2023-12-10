@@ -13,16 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "check")
+@Table(name = "checks")
 public class Check {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(columnDefinition = "TIMESTAMP") //FIXME: fix problem with DB
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
     @Column
-    private BigDecimal totalPrice;
+    private BigDecimal totalSum;
 
     @OneToMany(mappedBy = "id")
     private List<PizzaOrder> orders;

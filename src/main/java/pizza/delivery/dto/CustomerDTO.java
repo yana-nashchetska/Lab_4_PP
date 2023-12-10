@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pizza.delivery.entity.Customer;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -23,16 +25,10 @@ public class CustomerDTO {
     @NotBlank
     private String lastName;
 
-    // TODO: think about id generation and authorization
-    //TODO: think about money field - чи будемо його робити в принципі, бо типу мані не
-    // повинні відображатись в базі даних
-    // чи мані буде нулем, а будемо задавати?
+    private Boolean isAuthorized = Boolean.FALSE;
+    private List<PizzaOrderDTO> basket;
 
-    private Boolean isAuthorized = Boolean.FALSE; // буде перевірятись при покупці
-    private List<PizzaOrderDTO> basket;// замовлення, які ще не підтверджені
-
-
-    // Чи потрібно нам як параметри передавати також OrderDTO?
+    private BigDecimal money = BigDecimal.valueOf(10_000);
     public static CustomerDTO toDTO(final Customer customer) {
         final CustomerDTO customerDTO = new CustomerDTO();
 
@@ -40,9 +36,14 @@ public class CustomerDTO {
         customerDTO.setLastName(customer.getLastName());
         customerDTO.setIsAuthorized(customer.getIsAuthorized());
 
-        // customerDTO.setBasket(customer.getBasket());
-        // TODO: ПОДУМАТИ ЯК ПЕРЕДАТИ КОРЗИНКУ, ОСКІЛЬКИ КОРЗИНКА ПОВИННА БУТИ ТИПУ ОРДЕРДТО, А В НАС ПЕРЕДАЮТЬСЯ ДАНІ ВІД КОРИСТУВАЧА, А В НЬОГО
-        //  КОРЗИНКА ТИПУ ОРДЕР ПРОСТО. МОЖЛИВО ТРЕБА БУДЕ ПЕРЕДАВАТИ ЛІСТ ОРДЕРІВ, А НЕ ОРДЕРДТО
+        List<PizzaOrderDTO> pizzaOrderDTOs = customer.getBasket().stream()
+                .map(PizzaOrderDTO::toDTO)
+                .collect(Collectors.toList());
+
+        customerDTO.setBasket(pizzaOrderDTOs);
+        customerDTO.setMoney(customer.getMoney());
+
         return customerDTO;
     }
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 @Repository
 public interface CheckRepository extends JpaRepository<Check, Long> {
-    List<Check> findAllByOrders_PizzaName(String pizzaName);
+    List<Check> findAllByOrders_PizzaName(String pizzaType);
     List<Check> findAllByTotalPriceGreaterThan(BigDecimal amount);
     List<Check> findAllByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
     List<Check> findAllByOrders_CustomerId(Long customerId);

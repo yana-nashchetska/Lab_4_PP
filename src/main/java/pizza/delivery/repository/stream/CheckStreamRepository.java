@@ -1,5 +1,7 @@
 package pizza.delivery.repository.stream;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pizza.delivery.entity.Check;
 
 import java.util.ArrayList;
@@ -7,15 +9,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Repository
 public class CheckStreamRepository {
     private List<Check> checkList = new ArrayList<>();
 
-    private Long lastCheckId = 0L;
+    private Long lastCheckId = 1L;
 
     private Long generateId() {
         ++lastCheckId;
         return lastCheckId;
     }
+
+
 
     public Check save(final Check check) {
         check.setId(generateId());
@@ -27,7 +32,6 @@ public class CheckStreamRepository {
         return checkList;
     }
 
-    // TODO: Check update
 
     public Optional<Check> findById(final Long id) {
         return checkList.stream()

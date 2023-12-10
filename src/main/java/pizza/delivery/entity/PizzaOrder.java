@@ -1,14 +1,17 @@
 package pizza.delivery.entity;
 
+import lombok.Data;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
-// Клас для представлення замовлення піци
+import java.math.BigDecimal;
+
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "pizzaOrders")
 public class PizzaOrder {
@@ -16,28 +19,49 @@ public class PizzaOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private PizzaType pizzaType;
+    private String pizzaType = "Margherita";
 
-    private SauceType sauceType;
+    private String sauceType = "Default";
 
-    private boolean withCheeseCrust;
+    private boolean withCheeseCrust = false;
 
-    private boolean isConfirmed = false; // і чи так буде норм?
+    private boolean isConfirmed = false;
 
-    // а то не мало б бути в сервісі? я хз просто чи тут мають бути методи
-    // Метод для вибору типу піци //Нефінальна версія імплементації
-    public PizzaOrder choosePizza(PizzaType pizzaType, SauceType sauceType, boolean withCheeseCrust) {
-        PizzaOrder pizzaOrder = new PizzaOrder(0L, pizzaType, sauceType, withCheeseCrust, this.isConfirmed); // бо коли тільки додаємо до корзинки, то ще не підтверджено
-        System.out.println("You chose " + pizzaType.getDisplayName() + " pizza with " +
-                sauceType.getDisplayName() + " sauce and " +
-                (withCheeseCrust ? "cheese crust." : "regular crust."));
-        return pizzaOrder;
+    private BigDecimal price = BigDecimal.valueOf(100.5);
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    // Метод для отримання інформації про замовлену піцу
+    public void setPizzaType(String pizzaType) {
+        this.pizzaType = pizzaType;
+    }
+
+    public void setSauceType(String sauceType) {
+        this.sauceType = sauceType;
+    }
+
+    public void setWithCheeseCrust(boolean withCheeseCrust) {
+        this.withCheeseCrust = withCheeseCrust;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @Override
     public String toString() {
         if (pizzaType != null) {
-            return "Your current pizza order: " + pizzaType.getDisplayName();
+            return "Your current pizza order: " + pizzaType;
         } else {
             return "No pizza chosen yet.";
         }

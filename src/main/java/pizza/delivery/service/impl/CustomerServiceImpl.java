@@ -1,5 +1,6 @@
 package pizza.delivery.service.impl;
 
+import jakarta.validation.Valid;
 import pizza.delivery.service.CustomerService;
 import pizza.delivery.entity.Customer;
 import pizza.delivery.repository.CustomerRepository;
@@ -9,8 +10,8 @@ import pizza.delivery.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
         return CustomerDTO.toDTO(customer);
     }
 
-    private Customer findById(final Long id) {
+    public Customer findById(final Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException(String.format("User with id {%s} not found", id)));
     }
@@ -38,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO save(final CustomerDTO userDTO) {
+    public CustomerDTO save(final CustomerDTO customerDTO) {
         final Customer customer = new Customer();
 
         customer.setFirstName(customer.getFirstName());
@@ -58,12 +59,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO update(CustomerDTO customerDTO) {
+
         if (customerDTO.getId() == null) {
             throw new BadRequestException("Id can't be null");
         }
 
         final Customer savedCustomer = findById(customerDTO.getId());
-
         savedCustomer.setFirstName(customerDTO.getFirstName());
         savedCustomer.setLastName(customerDTO.getLastName());
         customerRepository.save(savedCustomer);
@@ -75,6 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO searchByNameAndSurname(String firstName, String lastName) {
         return customerRepository.findOneByNameAndSurname(firstName, lastName)
                 .map(CustomerDTO::toDTO)
-                .orElseThrow(() -> new BadRequestException(String.format("User with name {%s} and surname {%s} not found", firstName, lastName)));
+                .orElseThrow(() -> new BadRequestException(String.format("User with name {%s} and surname {%s} not found",
+                        firstName, lastName)));
     }
 }

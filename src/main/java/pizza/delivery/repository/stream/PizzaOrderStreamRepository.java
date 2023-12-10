@@ -4,9 +4,7 @@ import org.springframework.stereotype.Repository;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.PizzaOrder;
-import pizza.delivery.entity.SauceType;
 import pizza.delivery.exceptions.BadRequestException;
-import pizza.delivery.repository.PizzaOrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +27,7 @@ public class PizzaOrderStreamRepository  {
         return pizzaOrder;
     }
 
-    // переміщений код з Ресурсів:
-/*
-    public void savePizzaOrder(@RequestBody PizzaOrder pizzaOrder){
-        final PizzaOrderDTO pizzaOrderDTO = PizzaOrderDTO.toDTO(pizzaOrder);
-        pizzaOrderService.save(pizzaOrderDTO);
-    }*/
-
-    // що робимо з сейвом?
-
-    // edit - Наш update
-    public void editPizzaOrder(CustomerDTO customerDTO, PizzaOrderDTO pizzaOrderDTO, SauceType sauceTypeAdded) {
+    public void editPizzaOrder(CustomerDTO customerDTO, PizzaOrderDTO pizzaOrderDTO, String sauceTypeAdded) {
         customerDTO.getBasket().stream()
                 .filter(e -> e.getPizzaType().equals(pizzaOrderDTO.getPizzaType()))
                 .findFirst()
@@ -48,12 +36,11 @@ public class PizzaOrderStreamRepository  {
                             e.setSauceType(sauceTypeAdded);
                         },
                         () -> {
-                            throw new BadRequestException(String.format("PizzaOrder with id {%s} not found", pizzaOrderDTO.getPizzaType().getDisplayName()));
+                            throw new BadRequestException(String.format("PizzaOrder with id {%s} not found", pizzaOrderDTO.getPizzaType()));
                         }
                 );
     }
 
-    // Є МЕТОД пошуку за Ід
     public Optional<PizzaOrder> findById(final Long id){
         return pizzaOrders.stream()
                 .filter(e -> e.getId().equals(id))

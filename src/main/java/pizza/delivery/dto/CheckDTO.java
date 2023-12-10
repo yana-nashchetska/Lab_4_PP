@@ -18,7 +18,7 @@ public class CheckDTO {
     @NotNull
     private LocalDateTime date;
     @NotNull
-    private BigDecimal totalPrice;
+    private BigDecimal totalSum;
 
     @NotNull
     private List<PizzaOrder> orders;
@@ -28,7 +28,7 @@ public class CheckDTO {
 
         checkDTO.setId(check.getId());
         checkDTO.setDate(check.getDate());
-        checkDTO.setTotalPrice(check.getTotalPrice());
+        checkDTO.setTotalSum(check.getTotalSum());
         checkDTO.setOrders(check.getOrders());
 
         return checkDTO;
