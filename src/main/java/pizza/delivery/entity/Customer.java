@@ -1,10 +1,7 @@
 package pizza.delivery.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,8 @@ public class Customer {
 
     //FIXME: fix problem with DB
     //TODO: think about id generation and authorization
- @Id // вказуємо, що це поле є унікальним ідентифікатором
+   @Id // вказуємо, що це поле є унікальним ідентифікатором
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String firstName;
@@ -34,9 +32,9 @@ public class Customer {
      @Column
     private Boolean isActive = Boolean.TRUE;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customer")
     private List<Check> checkList;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customer")
     private List<PizzaOrder> basket;// щамовлення, які ще не підтверджені, та які не пішли в чек
 }

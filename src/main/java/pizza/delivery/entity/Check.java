@@ -24,6 +24,10 @@ public class Check {
     @Column
     private BigDecimal totalSum;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "check")
     private List<PizzaOrder> orders;
+
+    @ManyToOne
+    @JoinColumn
+    private Customer customer;
 }

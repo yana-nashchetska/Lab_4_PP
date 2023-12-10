@@ -1,6 +1,8 @@
 package pizza.delivery.resource;
 
 import jakarta.validation.constraints.Min;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.service.CustomerService;
@@ -16,8 +18,9 @@ public class CustomerResource {
     private CustomerService customerService;
 
     @PostMapping
-    public CustomerDTO createCustomer(final @RequestBody @Valid CustomerDTO customerDTO){
-        return customerService.save(customerDTO);
+    public ResponseEntity createCustomer(final @RequestBody @Valid CustomerDTO customerDTO){
+        final CustomerDTO responseBody = customerService.save(customerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
     @GetMapping("/{id}")
     public CustomerDTO findById(final @PathVariable @Min(1) Long id){

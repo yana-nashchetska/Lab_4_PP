@@ -3,6 +3,7 @@ package pizza.delivery.service.impl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import pizza.delivery.entity.PizzaOrder;
 import pizza.delivery.service.CustomerService;
 import pizza.delivery.entity.Customer;
 import pizza.delivery.repository.CustomerRepository;
@@ -12,6 +13,7 @@ import pizza.delivery.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,9 +46,13 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO save(final CustomerDTO customerDTO) {
         final Customer customer = new Customer();
 
-        customer.setFirstName(customer.getFirstName());
-        customer.setFirstName(customer.getLastName());
-        customer.setIsAuthorized(customer.getIsAuthorized());
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
+        List<PizzaOrder> tempBasket = new ArrayList<>();
+        //??? Що я щойно написав?
+        customer.getBasket().forEach(x->tempBasket.add(new PizzaOrder(x.getId(), x.getPizzaType(), x.getSauceType(), x.isWithCheeseCrust(), x.isConfirmed(), x.getPrice(), x.getCustomer(), x.getCheck())));
+        customer.setBasket(tempBasket);
+
         customerRepository.save(customer);
 
         return CustomerDTO.toDTO(customer);
