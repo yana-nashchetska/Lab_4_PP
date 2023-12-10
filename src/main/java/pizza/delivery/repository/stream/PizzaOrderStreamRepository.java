@@ -53,6 +53,7 @@ public class PizzaOrderStreamRepository  {
                 );
     }
 
+    // Є МЕТОД пошуку за Ід
     public Optional<PizzaOrder> findById(final Long id){
         return pizzaOrders.stream()
                 .filter(e -> e.getId().equals(id))

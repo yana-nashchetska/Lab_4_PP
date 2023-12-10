@@ -17,5 +17,5 @@ public interface PizzaOrderRepository extends JpaRepository<PizzaOrder, Long> {
 
 
     // в крупи цей інтерфейс є пустим, оскільки він
-    // еквівалентний тікету.
+    // еквівалентний тікету. Чи все ж він не є еквівалентним тікету?
 }

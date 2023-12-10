@@ -30,7 +30,7 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     @Override
     public void orderPizza(Long customerId, Long pizzaOrderId) {
 
-        // FIXME: додати перевірку на наявність користувача та ордера
+        // FIXME: додати перевірку на наявність користувача та ордера - Є
         //FixMe: створити метод в репозиторії, який буде шукати користувача по ід
 
         // РОЗКОМЕНТУВАТИ, КОЛИ ДО КАСТОМЕРА БУДЕ ДОДАНО FIND BY ID!!!!!!!!!
