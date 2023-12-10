@@ -1,5 +1,6 @@
 package pizza.delivery.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class CheckDTO {
     @NotNull
     private BigDecimal totalSum;
 
+    @Valid
     @NotNull
     private List<PizzaOrder> orders;
 

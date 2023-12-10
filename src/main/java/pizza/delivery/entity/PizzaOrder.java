@@ -29,6 +29,13 @@ public class PizzaOrder {
 
     private BigDecimal price = BigDecimal.valueOf(100.5);
 
+    @ManyToOne
+    @JoinColumn
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn
+    private Check check;
 
     public void setId(Long id) {
         this.id = id;
