@@ -1,5 +1,7 @@
 package pizza.delivery.service.impl;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CheckDTO;
 import pizza.delivery.entity.Check;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CheckServiceImpl implements CheckService {
 
     @Override
@@ -28,7 +30,7 @@ public class CheckServiceImpl implements CheckService {
         return null;
     }
 
-    private final CheckRepository checkRepository;
+    private CheckRepository checkRepository;
 
     @Override
     public CheckDTO findDTOById(Long id) {

@@ -1,5 +1,6 @@
 package pizza.delivery.resource;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pizza.delivery.service.PizzaOrderService;
@@ -8,10 +9,10 @@ import pizza.delivery.dto.PizzaOrderDTO;
 
 @RestController
 @RequestMapping("/order-pizza")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PizzaOrderResource {
 
-    private final PizzaOrderService pizzaOrderService;
+    private PizzaOrderService pizzaOrderService;
     @PostMapping("/{userId}/{orderId}/{pizzaType}")
     public void orderPizza(@PathVariable Long userId, @PathVariable Long orderId, @PathVariable String pizzaType) {
         pizzaOrderService.orderPizza(userId, orderId,pizzaType);

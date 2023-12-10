@@ -11,6 +11,6 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    Optional<Customer> findOneByNameAndSurname(String firstName, String lastName);
+    Optional<Customer> findOneByFirstNameAndLastName(String firstName, String lastName);
     List<Customer> findAllByIsActiveTrue();
 }
