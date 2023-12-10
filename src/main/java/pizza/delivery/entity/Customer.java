@@ -31,6 +31,8 @@ public class Customer {
     // !!!подумати, чи будуть BigDecimal.ZER0  чи будемо задавати початкову суму
     @Column
     private Boolean isAuthorized = Boolean.FALSE; // буде перевірятись при покупці
+     @Column
+    private Boolean isActive = Boolean.TRUE;
 
     @OneToMany(mappedBy = "id")
     private List<Check> checkList;
