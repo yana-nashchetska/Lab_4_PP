@@ -2,25 +2,22 @@ package pizza.delivery.resource;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pizza.delivery.dto.CheckDTO;
 import pizza.delivery.service.CheckService;
-import java.util.List;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/checks")
 @AllArgsConstructor
 public class CheckResource {
-
+    @Autowired
     private CheckService checkService;
 
-    //@Autowired
     @GetMapping("/{id}")
     public ResponseEntity<CheckDTO> getCheckById(@PathVariable Long id) {
         CheckDTO checkDTO = checkService.getCheckById(id);
@@ -36,7 +33,7 @@ public class CheckResource {
     @PostMapping
     public ResponseEntity<CheckDTO> createCheck(@RequestBody @Valid CheckDTO checkDTO) {
         CheckDTO createdCheck = checkService.createCheck(checkDTO);
-        return new ResponseEntity<>(createdCheck, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCheck);
     }
 
     @PutMapping("/{id}")

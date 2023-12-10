@@ -48,10 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
-        List<PizzaOrder> tempBasket = new ArrayList<>();
-        //??? Що я щойно написав?
-        customer.getBasket().forEach(x->tempBasket.add(new PizzaOrder(x.getId(), x.getPizzaType(), x.getSauceType(), x.isWithCheeseCrust(), x.isConfirmed(), x.getPrice(), x.getCustomer(), x.getCheck())));
-        customer.setBasket(tempBasket);
+
+        // Initialize basket with an empty list
+        customer.setBasket(new ArrayList<>());
+        customer.setMoney(customerDTO.getMoney());
 
         customerRepository.save(customer);
 

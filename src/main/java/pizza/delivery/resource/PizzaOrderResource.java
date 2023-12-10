@@ -1,22 +1,25 @@
 package pizza.delivery.resource;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pizza.delivery.service.PizzaOrderService;
 import pizza.delivery.dto.PizzaOrderDTO;
-
+import pizza.delivery.service.PizzaOrderService;
 
 @RestController
 @RequestMapping("/order-pizza")
 @AllArgsConstructor
 public class PizzaOrderResource {
-
+    @Autowired
     private PizzaOrderService pizzaOrderService;
+
     @PostMapping("/{userId}/{orderId}/{pizzaType}")
-    public void orderPizza(@PathVariable Long userId, @PathVariable Long orderId, @PathVariable String pizzaType) {
-        pizzaOrderService.orderPizza(userId, orderId,pizzaType);
+    public ResponseEntity<Void> orderPizza(@PathVariable Long userId, @PathVariable Long orderId, @PathVariable String pizzaType) {
+        pizzaOrderService.orderPizza(userId, orderId, pizzaType);
+        return ResponseEntity.ok().build();
     }
+
     @PostMapping("/{customerId}/{orderId}/add-sauce")
     public void addSauceToPizza(@PathVariable String customerId, @PathVariable Long orderId, @RequestBody String sauceType) {
         pizzaOrderService.addSauce(Long.valueOf(customerId), orderId, sauceType);

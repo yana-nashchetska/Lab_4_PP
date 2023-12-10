@@ -4,10 +4,8 @@ import lombok.Data;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-
 
 @Data
 @NoArgsConstructor
@@ -18,16 +16,16 @@ public class PizzaOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String pizzaType = "Margherita";
-
+    @Column
     private String sauceType = "Default";
-
+    @Column
     private boolean withCheeseCrust = false;
-
+    @Column
     private boolean isConfirmed = false;
-
-    private BigDecimal price = BigDecimal.valueOf(100.5);
+    @Column
+    private BigDecimal price = BigDecimal.ZERO; // initialize with BigDecimal.ZERO
 
     @ManyToOne
     @JoinColumn
@@ -67,11 +65,10 @@ public class PizzaOrder {
 
     @Override
     public String toString() {
-        if (pizzaType != null) {
+        if (!"Margherita".equals(pizzaType)) {
             return "Your current pizza order: " + pizzaType;
         } else {
             return "No pizza chosen yet.";
         }
     }
 }
-
