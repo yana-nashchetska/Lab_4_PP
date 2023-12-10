@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pizza.delivery.entity.Customer;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.PizzaOrder;
+import pizza.delivery.entity.SauceType;
 import pizza.delivery.exceptions.BadRequestException;
 import pizza.delivery.repository.PizzaOrderRepository;
 import pizza.delivery.service.PizzaOrderService;
@@ -43,6 +44,14 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     }
 
     @Override
+    public void addSauce(Long orderId, SauceType sauceType) {
+        PizzaOrder pizzaOrder = pizzaOrderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", orderId)));
+        pizzaOrder.setSauceType(sauceType);
+        pizzaOrderRepository.save(pizzaOrder);
+    }
+
+    @Override
     public PizzaOrderDTO findDTOById(final Long id) {
         final PizzaOrder pizzaOrder = findById(id);
 
@@ -52,14 +61,6 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     private PizzaOrder findById(Long id) {
         return pizzaOrderRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", id)));
     }
-
-    // мені здається, цей метод має зробити Настя, щоб перебирати ордери з полем true та додавати в чек
-
- /*   @Override
-    // Зовсім не розумію чи це працює і як якщо воно працює
-    public List<PizzaOrderDTO> findAll() {
-        return pizzaOrderRepository.findAllByIsConfirmedFalse().stream().map(PizzaOrderDTO::toDTO).collect(Collectors.toList());
-    }*/
 
     @Override
     public PizzaOrderDTO save(final PizzaOrderDTO pizzaOrderDTO) {
@@ -74,6 +75,8 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
         return PizzaOrderDTO.toDTO(pizzaOrder);
     }
+
+    //FIXME: переписати цей метод дя того, щоб можна було реалізовувати різну логіку видаляння
 
     @Override
     public void deleteById(Long id) {

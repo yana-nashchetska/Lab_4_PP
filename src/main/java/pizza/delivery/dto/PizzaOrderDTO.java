@@ -28,9 +28,6 @@ public class PizzaOrderDTO {
     private boolean withCheeseCrust;
 
     private boolean isConfirmed; // отак буде норм?
-
-    // нам мабуть треба ще передавати булеан поле з "Чи оплачено", щоб Настя
-    // могла додати продукти з таким полем чи оплачено = true з корзинки в чек?
     public static PizzaOrderDTO toDTO(final PizzaOrder pizzaOrder) {
         final PizzaOrderDTO pizzaOrderDTO = new PizzaOrderDTO();
 

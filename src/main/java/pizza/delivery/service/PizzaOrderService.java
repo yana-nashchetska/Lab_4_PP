@@ -5,17 +5,20 @@ import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.entity.Customer;
 import pizza.delivery.entity.PizzaOrder;
+import pizza.delivery.entity.SauceType;
 
 import java.util.List;
 
 public interface PizzaOrderService {
-    public PizzaOrderDTO findDTOById(final Long id);
+    PizzaOrderDTO findDTOById(final Long id);
 
-    public List<PizzaOrderDTO> findAll();
+    void addSauce(Long orderId, SauceType sauceType);
 
-    public PizzaOrderDTO save(final PizzaOrderDTO pizzaOrderDTO);
+    List<PizzaOrderDTO> findAll();
 
-    public void deleteById(Long id);
+    PizzaOrderDTO save(final PizzaOrderDTO pizzaOrderDTO);
+
+    void deleteById(Long id);
 
     void orderPizza(Long userId, Long pizzaOrderId);
 }
