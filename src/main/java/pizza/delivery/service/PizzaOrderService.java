@@ -18,5 +18,5 @@ public interface PizzaOrderService {
 
     void deleteAllFromBasket(Long customerId);
 
-    void orderPizza(Long userId, Long pizzaOrderId, String pizzaType);
+    void orderPizza(Long userId, String pizzaType);
 }

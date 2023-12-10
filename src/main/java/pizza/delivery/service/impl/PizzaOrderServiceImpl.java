@@ -34,11 +34,11 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     }
 
     @Override
-    public void orderPizza(Long customerId, Long pizzaOrderId, String pizzaType) {
+    public void orderPizza(Long customerId, String pizzaType) {
         CustomerDTO customerDTO = customerRepository.findDTOById(customerId);
 
-        if (customerDTO == null || pizzaOrderId == null || pizzaType == null) {
-            throw new BadRequestException("Invalid customer, pizza order, or pizza type");
+        if (customerDTO == null || pizzaType == null) {
+            throw new BadRequestException("Invalid customer or pizza type");
         }
 
         PizzaOrderDTO pizzaOrderDTO = new PizzaOrderDTO();

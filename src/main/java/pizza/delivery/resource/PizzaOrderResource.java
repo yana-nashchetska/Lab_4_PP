@@ -8,15 +8,15 @@ import pizza.delivery.dto.PizzaOrderDTO;
 import pizza.delivery.service.PizzaOrderService;
 
 @RestController
-@RequestMapping("/order-pizza")
+@RequestMapping("/api/order-pizza")
 @AllArgsConstructor
 public class PizzaOrderResource {
     @Autowired
     private PizzaOrderService pizzaOrderService;
 
-    @PostMapping("/{userId}/{orderId}/{pizzaType}")
-    public ResponseEntity<Void> orderPizza(@PathVariable Long userId, @PathVariable Long orderId, @PathVariable String pizzaType) {
-        pizzaOrderService.orderPizza(userId, orderId, pizzaType);
+    @PostMapping("/{userId}")
+    public ResponseEntity<Void> orderPizza(@PathVariable Long userId) {
+        pizzaOrderService.orderPizza(userId, "Margarita");
         return ResponseEntity.ok().build();
     }
 

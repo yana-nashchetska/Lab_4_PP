@@ -11,6 +11,7 @@ import pizza.delivery.entity.PizzaOrder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PizzaOrderDTO {
+    private long id;
     @NotNull
     @NotBlank
     private String pizzaType = "Margherita";
