@@ -33,7 +33,7 @@ public class CustomerDTO {
 
 
     // Чи потрібно нам як параметри передавати також OrderDTO?
-    public static CustomerDTO toDTO(final Customer customer, final PizzaOrderDTO pizzaOrderDTO) {
+    public static CustomerDTO toDTO(final Customer customer) {
         final CustomerDTO customerDTO = new CustomerDTO();
 
         customerDTO.setFirstName(customer.getFirstName());
