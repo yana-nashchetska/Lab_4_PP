@@ -1,8 +1,6 @@
 package pizza.delivery.service.impl;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import pizza.delivery.entity.PizzaOrder;
 import pizza.delivery.service.CustomerService;
 import pizza.delivery.entity.Customer;
@@ -10,12 +8,10 @@ import pizza.delivery.repository.CustomerRepository;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.exceptions.BadRequestException;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

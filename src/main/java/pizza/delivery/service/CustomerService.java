@@ -2,7 +2,6 @@ package pizza.delivery.service;
 
 import pizza.delivery.dto.CustomerDTO;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface CustomerService {
@@ -11,6 +10,5 @@ public interface CustomerService {
     List<CustomerDTO> findAll();
     CustomerDTO save(CustomerDTO customer);
     CustomerDTO update(CustomerDTO customer);
-
     CustomerDTO searchByNameAndSurname(String firstName, String lastName);
 }

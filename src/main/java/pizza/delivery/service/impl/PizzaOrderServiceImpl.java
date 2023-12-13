@@ -1,8 +1,6 @@
 package pizza.delivery.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.entity.Customer;

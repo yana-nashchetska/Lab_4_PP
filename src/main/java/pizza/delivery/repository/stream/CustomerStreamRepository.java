@@ -24,8 +24,6 @@ public class CustomerStreamRepository {
         return customerList;
     }
 
-    //TODO: Customer update
-
     public Optional<Customer> findById(final Long id) {
         return customerList.stream()
                 .filter(e -> e.getId().equals(id))

@@ -1,6 +1,5 @@
 package pizza.delivery.repository.stream;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pizza.delivery.entity.Check;
 

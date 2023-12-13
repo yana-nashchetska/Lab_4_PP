@@ -1,7 +1,6 @@
 package pizza.delivery.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import pizza.delivery.dto.CheckDTO;
 import pizza.delivery.entity.Check;
@@ -9,8 +8,6 @@ import pizza.delivery.entity.PizzaOrder;
 import pizza.delivery.exceptions.BadRequestException;
 import pizza.delivery.repository.CheckRepository;
 import pizza.delivery.service.CheckService;
-
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -107,12 +104,10 @@ public class CheckServiceImpl implements CheckService {
     public BigDecimal calculateTotalSum(Long id) {
         Check check = findById(id);
 
-        // Assuming Order class has a getPrice() method returning BigDecimal
         List<BigDecimal> orderPrices = check.getOrders().stream()
                 .map(PizzaOrder::getPrice)
                 .collect(Collectors.toList());
 
-        // Summing up the prices
         BigDecimal totalSum = orderPrices.stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

@@ -11,7 +11,6 @@ public interface CheckService {
     CheckDTO createCheck(CheckDTO checkDTO);
     CheckDTO updateCheck(Long id, CheckDTO checkDTO);
 
-    // Додайте цей метод для обчислення загальної суми
     BigDecimal calculateTotalSum(Long id);
 
     void deleteCheck(Long id);

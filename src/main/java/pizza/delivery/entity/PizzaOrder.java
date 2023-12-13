@@ -25,7 +25,7 @@ public class PizzaOrder {
     @Column
     private boolean isConfirmed = false;
     @Column
-    private BigDecimal price = BigDecimal.ZERO; // initialize with BigDecimal.ZERO
+    private BigDecimal price = BigDecimal.ZERO;
 
     @ManyToOne
     @JoinColumn
