@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pizza.delivery.dto.CheckDTO;
 import pizza.delivery.service.CheckService;
-
 import java.util.List;
 
 @RestController
@@ -17,6 +16,7 @@ import java.util.List;
 public class CheckResource {
     @Autowired
     private CheckService checkService;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<CheckDTO> getCheckById(@PathVariable Long id) {

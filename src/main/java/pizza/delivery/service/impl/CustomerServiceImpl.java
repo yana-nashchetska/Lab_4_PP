@@ -48,11 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
-
-        // Initialize basket with an empty list
-        customer.setBasket(new ArrayList<>());
         customer.setMoney(customerDTO.getMoney());
-
+        List<PizzaOrder> tempBasket = new ArrayList<>();
+        customer.getBasket().forEach(x->tempBasket.add(new PizzaOrder(x.getId(), x.getPizzaType(), x.getSauceType(), x.isWithCheeseCrust(), x.isConfirmed(), x.getPrice(), x.getCustomer(), x.getCheck())));
+        customer.setBasket(tempBasket);
         customerRepository.save(customer);
 
         return CustomerDTO.toDTO(customer);

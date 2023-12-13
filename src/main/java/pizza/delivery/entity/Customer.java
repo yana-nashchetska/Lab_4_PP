@@ -1,5 +1,6 @@
 package pizza.delivery.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,10 @@ public class Customer {
  @Column
  private String lastName;
  @Column
- private BigDecimal money; // will be deducted when purchasing
-
- // !!! Consider whether it will be BigDecimal.ZERO or if we will set an initial amount
- @Column
- private Boolean isAuthorized = Boolean.FALSE; // will be checked when purchasing
+ private BigDecimal money;
+  @Column
+  @Column
+ private Boolean isAuthorized = Boolean.FALSE;
  @Column
  private Boolean isActive = Boolean.TRUE;
 
@@ -35,4 +35,5 @@ public class Customer {
 
  @OneToMany(mappedBy = "customer")
  private List<PizzaOrder> basket = new ArrayList<>();
+
 }

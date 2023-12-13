@@ -24,8 +24,8 @@ public class CustomerResource {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid CustomerDTO customerDTO) {
-        CustomerDTO responseBody = customerService.save(customerDTO);
+    public ResponseEntity createCustomer(final @RequestBody @Valid CustomerDTO customerDTO){
+        final CustomerDTO responseBody = customerService.save(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
 
