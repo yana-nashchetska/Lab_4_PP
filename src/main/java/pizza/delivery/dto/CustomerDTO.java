@@ -28,16 +28,14 @@ public class CustomerDTO {
 
     private Boolean isAuthorized = Boolean.FALSE;
 
-    @Valid
-    @NotNull
-    @Size(min = 1, max = 10)
-    private List<PizzaOrderDTO> basket;
+    private List<PizzaOrderDTO> basket = new ArrayList<>();
 
     private BigDecimal money = BigDecimal.valueOf(10_000);
 
     public static CustomerDTO toDTO(final Customer customer) {
         final CustomerDTO customerDTO = new CustomerDTO();
 
+        customerDTO.setId(customer.getId());
         customerDTO.setFirstName(customer.getFirstName());
         customerDTO.setLastName(customer.getLastName());
         customerDTO.setIsAuthorized(customer.getIsAuthorized());
@@ -51,5 +49,4 @@ public class CustomerDTO {
 
         return customerDTO;
     }
-
 }

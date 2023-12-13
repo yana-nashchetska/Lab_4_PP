@@ -9,7 +9,6 @@ import java.util.Locale;
 
 
 @Configuration
-@Component
 public class LocalConfig {
 
     @Bean

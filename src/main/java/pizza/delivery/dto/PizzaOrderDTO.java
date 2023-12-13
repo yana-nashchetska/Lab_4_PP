@@ -11,6 +11,7 @@ import pizza.delivery.entity.PizzaOrder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PizzaOrderDTO {
+    private long id;
     @NotNull
     @NotBlank
     private String pizzaType = "Margherita";
@@ -21,15 +22,16 @@ public class PizzaOrderDTO {
 
     @NotNull
     @NotBlank
-    private boolean withCheeseCrust = false;
+    private Boolean withCheeseCrust = false;
 
-    private boolean isConfirmed = false;
+    private Boolean confirmed = false;
+
     public static PizzaOrderDTO toDTO(final PizzaOrder pizzaOrder) {
         final PizzaOrderDTO pizzaOrderDTO = new PizzaOrderDTO();
 
         pizzaOrderDTO.setPizzaType(pizzaOrder.getPizzaType());
         pizzaOrderDTO.setSauceType(pizzaOrder.getSauceType());
-        pizzaOrderDTO.setWithCheeseCrust(pizzaOrderDTO.isWithCheeseCrust());
+        pizzaOrderDTO.setWithCheeseCrust(pizzaOrder.isWithCheeseCrust());
         pizzaOrderDTO.setConfirmed(pizzaOrder.isConfirmed());
 
         return pizzaOrderDTO;

@@ -7,23 +7,16 @@ import pizza.delivery.entity.Check;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class CheckStreamRepository {
     private List<Check> checkList = new ArrayList<>();
-
-    private Long lastCheckId = 1L;
-
-    private Long generateId() {
-        ++lastCheckId;
-        return lastCheckId;
-    }
-
-
+    private final AtomicLong lastCheckId = new AtomicLong(1);
 
     public Check save(final Check check) {
-        check.setId(generateId());
+        check.setId(lastCheckId.incrementAndGet());
         checkList.add(check);
         return check;
     }

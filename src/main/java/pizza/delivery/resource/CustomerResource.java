@@ -1,13 +1,14 @@
 package pizza.delivery.resource;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import pizza.delivery.dto.CustomerDTO;
 import pizza.delivery.service.CustomerService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,16 +16,23 @@ import java.util.List;
 @RequestMapping("/api/customer")
 @Validated
 public class CustomerResource {
-    private CustomerService customerService;
+    private final CustomerService customerService;
+
+    @Autowired
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @PostMapping
     public ResponseEntity createCustomer(final @RequestBody @Valid CustomerDTO customerDTO){
         final CustomerDTO responseBody = customerService.save(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
+
     @GetMapping("/{id}")
-    public CustomerDTO findById(final @PathVariable @Min(1) Long id){
-        return customerService.findDTOById(id);
+    public ResponseEntity<CustomerDTO> findById(@PathVariable @Min(1) Long id) {
+        CustomerDTO customerDTO = customerService.findDTOById(id);
+        return ResponseEntity.ok(customerDTO);
     }
 
     @GetMapping("/all-users")

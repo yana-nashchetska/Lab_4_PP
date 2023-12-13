@@ -29,22 +29,18 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
     }
 
+    private boolean isPizzaOrderInCustomerBasket(Customer customer, PizzaOrder pizzaOrder) {
+        return customer.getBasket().contains(pizzaOrder);
+    }
+
     @Override
-    public void orderPizza(Long customerId, Long pizzaOrderId, String pizzaType) {
-
-        if(customerRepository.findDTOById(customerId) == null){
-            throw new BadRequestException(String.format("Customer with id {%s} not found", customerId));
-        }
-
-        if(pizzaOrderRepository.findById(pizzaOrderId).isEmpty()){
-            throw new BadRequestException(String.format("PizzaOrder with id {%s} not found", pizzaOrderId));
-        }
-
-        if(pizzaType == null){
-            throw new BadRequestException("PizzaType is not found");
-        }
-
+    public void orderPizza(Long customerId, String pizzaType) {
         CustomerDTO customerDTO = customerRepository.findDTOById(customerId);
+
+        if (customerDTO == null || pizzaType == null) {
+            throw new BadRequestException("Invalid customer or pizza type");
+        }
+
         PizzaOrderDTO pizzaOrderDTO = new PizzaOrderDTO();
         pizzaOrderDTO.setPizzaType(pizzaType);
         pizzaOrderDTO.setConfirmed(false);
@@ -57,10 +53,9 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
     @Override
     public void addSauce(Long customerId, Long orderId, String sauceType) {
         Customer customer = customerRepository.findById(customerId);
-        PizzaOrder pizzaOrder = pizzaOrderRepository.findById(orderId)
-                .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", orderId)));
+        PizzaOrder pizzaOrder = findById(orderId);
 
-        if (!customer.getBasket().contains(pizzaOrder)) {
+        if (!isPizzaOrderInCustomerBasket(customer, pizzaOrder)) {
             throw new BadRequestException(String.format("PizzaOrder with id {%s} does not belong to Customer with id {%s}",
                     orderId, customerId));
         }
@@ -69,12 +64,12 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
         pizzaOrderRepository.save(pizzaOrder);
     }
 
+    @Override
     public void addCheeseCrust(Long customerId, Long orderId) {
         Customer customer = customerRepository.findById(customerId);
-        PizzaOrder pizzaOrder = pizzaOrderRepository.findById(orderId)
-                .orElseThrow(() -> new BadRequestException(String.format("PizzaOrder with id {%s} not found", orderId)));
+        PizzaOrder pizzaOrder = findById(orderId);
 
-        if (!customer.getBasket().contains(pizzaOrder)) {
+        if (!isPizzaOrderInCustomerBasket(customer, pizzaOrder)) {
             throw new BadRequestException(String.format("PizzaOrder with id {%s} does not belong to Customer with id {%s}",
                     orderId, customerId));
         }
@@ -101,8 +96,8 @@ public class PizzaOrderServiceImpl implements PizzaOrderService {
 
         pizzaOrder.setPizzaType(pizzaOrderDTO.getPizzaType());
         pizzaOrder.setSauceType(pizzaOrderDTO.getSauceType());
-        pizzaOrder.setWithCheeseCrust(pizzaOrderDTO.isWithCheeseCrust());
-        pizzaOrder.setConfirmed(pizzaOrderDTO.isConfirmed());
+        pizzaOrder.setWithCheeseCrust(pizzaOrderDTO.getWithCheeseCrust());
+        pizzaOrder.setConfirmed(pizzaOrderDTO.getConfirmed());
 
         pizzaOrderRepository.save(pizzaOrder);
 
