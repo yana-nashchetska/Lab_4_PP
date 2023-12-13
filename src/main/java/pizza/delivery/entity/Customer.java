@@ -24,8 +24,7 @@ public class Customer {
  private String lastName;
  @Column
  private BigDecimal money;
-  @Column
-  @Column
+ @Column
  private Boolean isAuthorized = Boolean.FALSE;
  @Column
  private Boolean isActive = Boolean.TRUE;
